@@ -18,7 +18,7 @@ public class ReferenciaView extends HorizontalLayout {
     private static final long serialVersionUID = 673385547414433022L;
 	private TextField name;
     private Button sayHello;
-
+//teste
     public ReferenciaView() {
         name = new TextField("Your name");
         sayHello = new Button("Say hello");
