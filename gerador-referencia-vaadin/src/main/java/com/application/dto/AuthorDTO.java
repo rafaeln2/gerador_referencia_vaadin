@@ -1,10 +1,10 @@
-package com.application.model;
+package com.application.dto;
 
-public class Author {
+public class AuthorDTO {
 	private String given; // nome
 	private String family; // sobrenome
 
-	public Author() {
+	public AuthorDTO() {
 		super();
 	}
 

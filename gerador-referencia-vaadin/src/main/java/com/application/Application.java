@@ -1,9 +1,12 @@
 package com.application;
 
-import com.application.controllers.CrossRefService;
+import com.application.controllers.ReferenciaService;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
 
+import java.beans.Encoder;
+
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,7 +26,7 @@ public class Application implements AppShellConfigurator, CommandLineRunner {
 	private static final long serialVersionUID = 2838069679349980311L;
 	
 	@Autowired
-	CrossRefService crossRefService;
+	ReferenciaService crossRefService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -53,13 +56,14 @@ public class Application implements AppShellConfigurator, CommandLineRunner {
 //		String name = myCustomer.getString("name");
 //		JSONObject address = myCustomer.getJSONObject("address"); // if address is a composite object with city, street, etc...
 		
-		var doi = "10.3233/ISU-2002-222-309";
-		var referencia = crossRefService.buscaDOI(doi);
-		System.out.println(referencia.getMessage().getTitle());
-		System.out.println(referencia.getMessage().getPublished());
-		System.out.println(referencia.getMessage().getPublished().getDateParts());
-		System.out.println(referencia.getMessage().getVolume());
-		referencia.getMessage().getAuthor().forEach(e -> System.out.println(String.format("%s %s", e.getGiven(), e.getFamily())));
-		System.out.println(referencia.getMessage().getContainerTitle());
+//		var doi = "10.1109/EDUNINE.2018.8450950";
+//		var referencia = crossRefService.prepararReferencia(doi);
+//		System.out.println(referencia.getWorkMessage().getTitle());
+//		System.out.println(referencia.getWorkMessage().getPublished().getDateParts().get(0).get(0));
+//		System.out.println(referencia.getWorkMessage().getVolume());
+//		referencia.getWorkMessage().getAuthor().forEach(e -> System.out.println(String.format("%s %s", e.getGiven(), e.getFamily())));
+//		System.out.println(Jsoup.parse(referencia.getWorkMessage().getContainerTitle().toString()).text());
+//		System.out.println(referencia.getWorkMessage().getJournalIssue().getIssue());
+		
 	}
 }

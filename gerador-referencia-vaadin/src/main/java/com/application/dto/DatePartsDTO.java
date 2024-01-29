@@ -1,4 +1,4 @@
-package com.application.model;
+package com.application.dto;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("date-parts")
-public class DateParts {
+public class DatePartsDTO {
 	
 	private List<Integer> dateParts;
 	
-	public DateParts() {
+	public DatePartsDTO() {
 		super();
 	}
 

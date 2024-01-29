@@ -1,10 +1,18 @@
 package com.application.views.referencia;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.application.controllers.ReferenciaService;
 import com.application.views.MainLayout;
+import com.vaadin.flow.component.Html;
+import com.vaadin.flow.component.HtmlComponent;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.charts.model.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.richtexteditor.RichTextEditor;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -16,21 +24,39 @@ import com.vaadin.flow.router.RouteAlias;
 public class ReferenciaView extends HorizontalLayout {
 
     private static final long serialVersionUID = 673385547414433022L;
-	private TextField name;
-    private Button sayHello;
-//teste
+    
+	private TextField tfDoi;
+    private Button btnGerarReferencia;
+    private Html tfResultado;
+    
+    @Autowired
+    private ReferenciaService service;
+    
     public ReferenciaView() {
-        name = new TextField("Your name");
-        sayHello = new Button("Say hello");
-        sayHello.addClickListener(e -> {
-            Notification.show("Hello " + name.getValue());
+    	tfResultado = new Html("");
+    	tfResultado.setVisible(false);
+    	
+        tfDoi = new TextField("DOI");
+        tfDoi.setTooltipText("10.xxxxxx/exemplo");
+        tfDoi.setWidth("15em");
+        
+        btnGerarReferencia = new Button("Gerar referência");
+        btnGerarReferencia.addClickListener(e -> {
+//            Notification.show("Hello " + doi.getValue());
+        	try {
+				tfResultado.setHtmlContent(service.prepararReferencia(tfDoi.getValue()));
+				tfResultado.setVisible(true);
+			} catch (Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
         });
-        sayHello.addClickShortcut(Key.ENTER);
+        btnGerarReferencia.addClickShortcut(Key.ENTER);
 
         setMargin(true);
-        setVerticalComponentAlignment(Alignment.END, name, sayHello);
+        setVerticalComponentAlignment(Alignment.END, tfDoi, btnGerarReferencia, tfResultado);
 
-        add(name, sayHello);
+        add(tfDoi, btnGerarReferencia, tfResultado);
     }
 
 }

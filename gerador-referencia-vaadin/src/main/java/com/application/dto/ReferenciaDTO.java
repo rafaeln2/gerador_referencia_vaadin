@@ -1,10 +1,10 @@
-package com.application.model;
+package com.application.dto;
 
-public class Referencia {
+public class ReferenciaDTO {
 
 	private String Doi;
 
-	public Referencia() {
+	public ReferenciaDTO() {
 		super();
 	}
 

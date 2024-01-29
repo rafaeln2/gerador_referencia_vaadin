@@ -1,18 +1,15 @@
-package com.application.model;
+package com.application.dto;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
 
-public class Published {
+public class PublishedDTO {
 	
 	@SerializedName("date-parts")
 	private ArrayList<ArrayList<Integer>> dateParts;
 	
-	public Published() {
+	public PublishedDTO() {
 		super();
 	}
 
