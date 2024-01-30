@@ -56,20 +56,42 @@ public class ReferenciaService {
 
 	private String gerarReferencia(ResponseWorkDTO work) {
 		StringBuilder referencia = new StringBuilder();
+		referencia.append("<span>");
 		switch (work.getWorkMessage().getType()) {
 		case "book": {
 			work.getWorkMessage().getAuthor().forEach(e -> {
 				referencia.append(String.format("%s, %s", e.getFamily().toUpperCase(), e.getGiven()));
-			});
+			}); //fix multiple author names
 			referencia.append(".");
 			
-			referencia.append(String.format("<b> %s </b>", work.getWorkMessage().getTitle()));
+			if (!work.getWorkMessage().getSubtitle().get(0).isEmpty()) {
+				referencia.append(String.format("<b> %s: </b> %s.", work.getWorkMessage().getTitle().get(0), work.getWorkMessage().getSubtitle().get(0)));
+			} else {
+				referencia.append(String.format("<b> %s. </b>", work.getWorkMessage().getTitle().get(0)));
+			}
+//			referencia.append(String.format("<b> %s. </b>", work.getWorkMessage().getTitle().get(0)));
+//			referencia.append(String.format("", work.getWorkMessage().getSubtitle().get(0)));
+			
+			referencia.append(" [s.l]: ");
+			
+			referencia.append(String.format("%s, ", work.getWorkMessage().getPublisher()));
+			
+			referencia.append(String.format(" %s ", work.getWorkMessage().getPublished().getDateParts().get(0).get(0)));
+			
+			referencia.append(String.format("DOI: %s. ", work.getWorkMessage().getDoi()));
+			
+			referencia.append(String.format("Disponível em: %s.", work.getWorkMessage().getResource().getPrimary().getUrl()));
+			
+			referencia.append("</span>");
 			return referencia.toString();
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + work.getWorkMessage().getType());
 		}
 	}
+	
+
+//
 
 	private Boolean validaDOICrossref(final String doi) throws Exception {
 		String urlParaChamada = webService + webServiceWork + doi + webServiceWorkAgency;
@@ -95,24 +117,6 @@ public class ReferenciaService {
         }		
 	}
 	
-//	<!DOCTYPE html>
-//	<html lang="en">
-//	  <head>
-//	    <meta charset="UTF-8">
-//	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-//	    <title>My Website</title>
-//	    <link rel="stylesheet" href="./style.css">
-//	    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-//	  </head>
-//	  <body>
-//	    <main>
-//	        <h1>Welcome to My Website</h1>  
-//	    </main>
-//		<script src="index.js"></script>
-//	  </body>
-//	</html>
-//	
 	private String buscaTypes(final String doi) throws Exception {
 		String urlParaChamada = webService + webServiceWork + doi + webServiceType;
         try {

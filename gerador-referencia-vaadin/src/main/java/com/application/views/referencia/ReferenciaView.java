@@ -9,6 +9,7 @@ import com.vaadin.flow.component.HtmlComponent;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.model.Label;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.richtexteditor.RichTextEditor;
@@ -27,14 +28,16 @@ public class ReferenciaView extends HorizontalLayout {
     
 	private TextField tfDoi;
     private Button btnGerarReferencia;
-    private Html tfResultado;
+    private Div tfResultado = new Div();
     
     @Autowired
     private ReferenciaService service;
     
     public ReferenciaView() {
-    	tfResultado = new Html("");
-    	tfResultado.setVisible(false);
+    	tfResultado.getElement().setProperty("innerHTML", "<p>Hello World</p></br><span>Some text after a break</span>");
+//    	tfResultado = new Html("<body><h1></h1></body>");
+    	
+    	tfResultado.setVisible(true);
     	
         tfDoi = new TextField("DOI");
         tfDoi.setTooltipText("10.xxxxxx/exemplo");
@@ -44,7 +47,7 @@ public class ReferenciaView extends HorizontalLayout {
         btnGerarReferencia.addClickListener(e -> {
 //            Notification.show("Hello " + doi.getValue());
         	try {
-				tfResultado.setHtmlContent(service.prepararReferencia(tfDoi.getValue()));
+				tfResultado.getElement().setProperty("innerHTML", service.prepararReferencia(tfDoi.getValue())); //(service.prepararReferencia(tfDoi.getValue()));
 				tfResultado.setVisible(true);
 			} catch (Exception ex) {
 				// TODO Auto-generated catch block

@@ -7,6 +7,15 @@ import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
 public class WorkMessageDTO {
 	private List<String> title;
 	
+	private List<String> subtitle;
+	
+	private String publisher;
+	
+	@SerializedName("DOI")
+	private String doi;
+	
+	private ResourceDTO resource;
+	
 	private PublishedDTO published;
 	
 	private String volume;
@@ -90,6 +99,38 @@ public class WorkMessageDTO {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public List<String> getSubtitle() {
+		return subtitle;
+	}
+
+	public void setSubtitle(List<String> subtitle) {
+		this.subtitle = subtitle;
+	}
+
+	public String getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	public String getDoi() {
+		return doi;
+	}
+
+	public void setDoi(String doi) {
+		this.doi = doi;
+	}
+
+	public ResourceDTO getResource() {
+		return resource;
+	}
+
+	public void setResource(ResourceDTO resource) {
+		this.resource = resource;
 	}
 
 }
