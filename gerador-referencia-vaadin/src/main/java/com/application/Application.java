@@ -3,6 +3,7 @@ package com.application;
 import com.application.controllers.ReferenciaService;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 import java.beans.Encoder;
 
@@ -20,7 +21,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-@Theme(value = "gerador-referencia-vaadin")
+@Theme(value = "gerador-referencia-vaadin", variant = Lumo.DARK)
+
 public class Application implements AppShellConfigurator, CommandLineRunner {
 
 	private static final long serialVersionUID = 2838069679349980311L;

@@ -5,22 +5,24 @@ import java.util.List;
 import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
 
 public class WorkMessageDTO {
+	private List<AuthorDTO> author;
+	
 	private List<String> title;
 	
 	private List<String> subtitle;
 	
 	private String publisher;
 	
+	private PublishedDTO published;
+	
 	@SerializedName("DOI")
 	private String doi;
 	
 	private ResourceDTO resource;
 	
-	private PublishedDTO published;
+	
 	
 	private String volume;
-	
-	private List<AuthorDTO> author;
 	
 	@SerializedName("container-title")
 	private List<String> containerTitle;
