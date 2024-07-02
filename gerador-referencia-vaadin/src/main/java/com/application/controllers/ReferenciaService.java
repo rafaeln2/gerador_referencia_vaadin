@@ -112,7 +112,7 @@ public class ReferenciaService {
 		}
 		
 		
-		if (work.getWorkMessage().getSubtitle().size() > 0) {
+		if (!work.getWorkMessage().getSubtitle().isEmpty()) {
 			referencia.append(String.format("<b> %s: </b> %s.", work.getWorkMessage().getTitle().get(0), work.getWorkMessage().getSubtitle().get(0)));
 		} else {
 			referencia.append(String.format("<b> %s. </b>", work.getWorkMessage().getTitle().get(0)));
@@ -205,17 +205,21 @@ public class ReferenciaService {
 	}
 	
 
-//
-
+// bate na crossref e valida se ele é de origem.
 	private Boolean validaDOICrossref(final String doi) throws Exception {
 		String urlParaChamada = webService + webServiceWork + doi + webServiceWorkAgency;
-        try {
+//        try {
+			if (doi.isEmpty() || doi.isBlank()){
+				throw new IllegalArgumentException("qual foi mané, tá vazio");
+			}
+
             URL url = new URL(urlParaChamada);
             HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
-            if (conexao.getResponseCode() != codigoSucesso)
-                throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
-
+            if (conexao.getResponseCode() != codigoSucesso){
+//                throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
+				throw new RuntimeException("Não foi possível obter resposta do site da CrossRef");
+			}
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
             
             String resposta, jsonEmString = "";
@@ -226,9 +230,9 @@ public class ReferenciaService {
             ResponseAgencyDTO Agency = gson.fromJson(jsonEmString, ResponseAgencyDTO.class);
             
             return Agency.getMessage().getAgency().getId().equalsIgnoreCase("crossref");
-        } catch (Exception e) {
-            throw new Exception("ERRO: " + e);
-        }		
+//        } catch (Exception e) {
+//            throw new Exception("ERRO: " + e);
+//        }
 	}
 	
 	private String buscaTypes(final String doi) throws Exception {

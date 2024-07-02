@@ -1,5 +1,6 @@
 package com.application.views.referencia;
 
+import com.vaadin.flow.component.notification.NotificationVariant;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.application.controllers.ReferenciaService;
@@ -42,6 +43,10 @@ public class ReferenciaView extends HorizontalLayout {
         tfDoi = new TextField("DOI");
         tfDoi.setTooltipText("10.xxxxxx/exemplo");
         tfDoi.setWidth("15em");
+
+        Notification notification = new Notification();
+        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+        notification.setDuration(5000);
         
         btnGerarReferencia = new Button("Gerar referência");
         btnGerarReferencia.addClickListener(e -> {
@@ -50,6 +55,10 @@ public class ReferenciaView extends HorizontalLayout {
 				tfResultado.getElement().setProperty("innerHTML", service.prepararReferencia(tfDoi.getValue())); //(service.prepararReferencia(tfDoi.getValue()));
 				tfResultado.setVisible(true);
 			} catch (Exception ex) {
+                tfDoi.setErrorMessage(ex.getMessage());
+                notification.setText(ex.getMessage());
+                notification.open();
+//                notification.show(Page.getCurrent());
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}
