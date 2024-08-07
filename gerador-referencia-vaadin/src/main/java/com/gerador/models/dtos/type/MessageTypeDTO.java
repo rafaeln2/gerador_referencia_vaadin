@@ -1,4 +1,4 @@
-package com.application.dto.type;
+package com.gerador.models.dtos.type;
 
 public class MessageTypeDTO {
 	private String id;

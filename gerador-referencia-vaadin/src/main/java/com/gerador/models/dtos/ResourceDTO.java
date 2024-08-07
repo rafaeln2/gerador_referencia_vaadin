@@ -1,4 +1,4 @@
-package com.application.dto;
+package com.gerador.models.dtos;
 
 public class ResourceDTO {
 	private PrimaryDTO primary;

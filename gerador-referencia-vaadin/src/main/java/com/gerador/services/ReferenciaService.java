@@ -1,24 +1,23 @@
-package com.application.controllers;
+package com.gerador.services;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
-import java.time.Instant;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.StringTokenizer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import com.application.dto.ResponseWorkDTO;
-import com.application.dto.agency.ResponseAgencyDTO;
-import com.application.dto.type.ResponseTypeDTO;
+import com.gerador.models.dtos.ResponseWorkDTO;
+import com.gerador.models.dtos.agency.ResponseAgencyDTO;
+import com.gerador.models.dtos.type.ResponseTypeDTO;
 import com.nimbusds.jose.shaded.gson.Gson;
 
 @Service
@@ -208,33 +207,48 @@ public class ReferenciaService {
 // bate na crossref e valida se ele é de origem.
 	private Boolean validaDOICrossref(final String doi) throws Exception {
 		String urlParaChamada = webService + webServiceWork + doi + webServiceWorkAgency;
-//        try {
-			if (doi.isEmpty() || doi.isBlank()){
-				throw new IllegalArgumentException("qual foi mané, tá vazio");
-			}
+		if (doi.isEmpty() || doi.isBlank()){
+			throw new IllegalArgumentException("Insira um DOI");
+		}
 
-            URL url = new URL(urlParaChamada);
-            HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
+		URL url = new URL(urlParaChamada);
+		HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
-            if (conexao.getResponseCode() != codigoSucesso){
+		if (conexao.getResponseCode() != codigoSucesso){
 //                throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
-				throw new RuntimeException("Não foi possível obter resposta do site da CrossRef");
-			}
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
-            
-            String resposta, jsonEmString = "";
-            while ((resposta = bufferedReader.readLine()) != null) {
-				jsonEmString += resposta;
-			}
-            Gson gson = new Gson();
-            ResponseAgencyDTO Agency = gson.fromJson(jsonEmString, ResponseAgencyDTO.class);
-            
-            return Agency.getMessage().getAgency().getId().equalsIgnoreCase("crossref");
-//        } catch (Exception e) {
-//            throw new Exception("ERRO: " + e);
-//        }
+			throw new RuntimeException("Não foi possível obter resposta do site da CrossRef");
+		}
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
+
+		String resposta, jsonEmString = "";
+		while ((resposta = bufferedReader.readLine()) != null) {
+			jsonEmString += resposta;
+		}
+		Gson gson = new Gson();
+		ResponseAgencyDTO agency = gson.fromJson(jsonEmString, ResponseAgencyDTO.class);
+
+		return agency.getMessage().getAgency().getId().equalsIgnoreCase("crossref");
 	}
-	
+
+	//tem que anotar as classes com jsonignoreproperties, funcionando atualmente com o gson.fromJson
+//	private Boolean validaDOICrossrefTeste(final String doi) throws Exception {
+//		String urlParaChamada = webService + webServiceWork + doi + webServiceWorkAgency;
+//		if (doi.isEmpty() || doi.isBlank()){
+//			throw new IllegalArgumentException("Insira um DOI");
+//		}
+//
+//		final HttpClient client = HttpClient.newHttpClient();
+//		final HttpRequest request = HttpRequest.newBuilder()
+//				.uri(URI.create(urlParaChamada)).build();
+//		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//		final ObjectMapper mapper = new ObjectMapper();
+//		if (response.body().contains("erro")) {
+//			throw new IllegalArgumentException("CEP não encontrado!");
+//		}
+//		final var dto = mapper.readValue(response.body(), ResponseAgencyDTO.class);
+//		return dto.getMessage().getAgency().getId().equalsIgnoreCase("crossref");
+//	}
+
 	private String buscaTypes(final String doi) throws Exception {
 		String urlParaChamada = webService + webServiceWork + doi + webServiceType;
         try {

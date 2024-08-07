@@ -1,8 +1,7 @@
-package com.application.dto;
+package com.gerador.models.dtos;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("date-parts")

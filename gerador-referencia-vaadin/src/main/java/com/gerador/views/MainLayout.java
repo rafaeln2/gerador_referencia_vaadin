@@ -1,7 +1,7 @@
-package com.application.views;
+package com.gerador.views;
 
-import com.application.views.about.AboutView;
-import com.application.views.referencia.ReferenciaView;
+import com.gerador.views.about.AboutView;
+import com.gerador.views.referencia.ReferenciaView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;

@@ -1,4 +1,4 @@
-package com.application.dto;
+package com.gerador.models.dtos;
 
 public class AuthorDTO {
 	private String given; // nome

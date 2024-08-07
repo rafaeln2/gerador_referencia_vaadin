@@ -1,20 +1,15 @@
-package com.application.views.referencia;
+package com.gerador.views.referencia;
 
 import com.vaadin.flow.component.notification.NotificationVariant;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.application.controllers.ReferenciaService;
-import com.application.views.MainLayout;
-import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.HtmlComponent;
+import com.gerador.services.ReferenciaService;
+import com.gerador.views.MainLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.charts.model.Label;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.richtexteditor.RichTextEditor;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;

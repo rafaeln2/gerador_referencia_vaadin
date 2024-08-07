@@ -1,13 +1,10 @@
-package com.application;
+package com.gerador;
 
-import com.application.controllers.ReferenciaService;
+import com.gerador.services.ReferenciaService;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
-import java.beans.Encoder;
-
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -1,4 +1,4 @@
-package com.application.dto;
+package com.gerador.models.dtos;
 
 import java.util.ArrayList;
 

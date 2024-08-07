@@ -1,5 +1,8 @@
-package com.application.dto.agency;
+package com.gerador.models.dtos.agency;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseAgencyDTO {
 	private String status;
 	private MessageAgencyDTO message;

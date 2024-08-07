@@ -1,4 +1,4 @@
-package com.application.dto.agency;
+package com.gerador.models.dtos.agency;
 
 public class MessageAgencyDTO {
 	private String DOI;
