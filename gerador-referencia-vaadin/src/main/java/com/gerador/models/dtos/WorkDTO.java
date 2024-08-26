@@ -2,13 +2,13 @@ package com.gerador.models.dtos;
 
 import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
 
-public class ResponseWorkDTO {
+public class WorkDTO {
 	private String status;
 	
 	@SerializedName("message")
 	private WorkMessageDTO message;
 
-	public ResponseWorkDTO() {
+	public WorkDTO() {
 		super();
 	}
 
