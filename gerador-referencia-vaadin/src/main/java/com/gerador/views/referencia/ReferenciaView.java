@@ -30,9 +30,8 @@ public class ReferenciaView extends HorizontalLayout {
     private ReferenciaService service;
     
     public ReferenciaView() {
-    	tfResultado.getElement().setProperty("innerHTML", "<p>Hello World</p></br><span>Some text after a break</span>");
-//    	tfResultado = new Html("<body><h1></h1></body>");
-    	
+    	tfResultado.getElement().setProperty("innerHTML", "<body/>");
+
     	tfResultado.setVisible(true);
     	
         tfDoi = new TextField("DOI");
@@ -45,7 +44,6 @@ public class ReferenciaView extends HorizontalLayout {
         
         btnGerarReferencia = new Button("Gerar referência");
         btnGerarReferencia.addClickListener(e -> {
-//            Notification.show("Hello " + doi.getValue());
         	try {
 				tfResultado.getElement().setProperty("innerHTML", service.prepararReferencia(tfDoi.getValue())); //(service.prepararReferencia(tfDoi.getValue()));
 				tfResultado.setVisible(true);
@@ -53,8 +51,6 @@ public class ReferenciaView extends HorizontalLayout {
                 tfDoi.setErrorMessage(ex.getMessage());
                 notification.setText(ex.getMessage());
                 notification.open();
-//                notification.show(Page.getCurrent());
-				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}
         });
