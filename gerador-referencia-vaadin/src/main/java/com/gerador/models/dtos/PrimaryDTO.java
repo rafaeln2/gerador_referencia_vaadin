@@ -1,9 +1,9 @@
 package com.gerador.models.dtos;
 
-import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PrimaryDTO {
-	@SerializedName("URL")
+	@JsonProperty("URL")
 	private String url;
 
 	public String getUrl() {

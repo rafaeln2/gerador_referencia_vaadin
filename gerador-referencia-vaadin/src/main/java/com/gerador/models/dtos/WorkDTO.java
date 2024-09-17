@@ -1,16 +1,12 @@
 package com.gerador.models.dtos;
 
-import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WorkDTO {
 	private String status;
 	
-	@SerializedName("message")
+	@JsonProperty("message")
 	private WorkMessageDTO message;
-
-	public WorkDTO() {
-		super();
-	}
 
 	public WorkMessageDTO getWorkMessage() {
 		return message;

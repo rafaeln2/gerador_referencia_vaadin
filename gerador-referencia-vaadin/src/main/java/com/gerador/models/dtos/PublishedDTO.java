@@ -2,11 +2,12 @@ package com.gerador.models.dtos;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
 
 public class PublishedDTO {
 	
-	@SerializedName("date-parts")
+	@JsonProperty("date-parts")
 	private ArrayList<ArrayList<Integer>> dateParts;
 	
 	public PublishedDTO() {
