@@ -2,6 +2,7 @@ package com.gerador.models.dtos;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nimbusds.jose.shaded.gson.annotations.SerializedName;
 
 public class WorkMessageDTO {
@@ -15,7 +16,7 @@ public class WorkMessageDTO {
 	
 	private PublishedDTO published;
 	
-	@SerializedName("DOI")
+	@JsonProperty("DOI")
 	private String doi;
 	
 	private ResourceDTO resource;
@@ -24,10 +25,10 @@ public class WorkMessageDTO {
 	
 	private String volume;
 	
-	@SerializedName("container-title")
+	@JsonProperty("container-title")
 	private List<String> containerTitle;
 	
-	@SerializedName("journal-issue")
+	@JsonProperty("journal-issue")
 	private JournalIssueDTO journalIssue;
 	
 	private String page;

@@ -1,18 +1,17 @@
 package com.gerador.models;
 
 import com.gerador.models.dtos.WorkDTO;
+import com.gerador.models.dtos.enums.TipoDocumento;
+import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
-public class TipoArtigoCientifico implements TipoStrategy {
+@Component
+public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrategy {
 
     @Override
     public String gerarReferencia(WorkDTO work) {
@@ -53,7 +52,7 @@ public class TipoArtigoCientifico implements TipoStrategy {
 
         //data por extenso da publicação. ex: abr. 2014
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.MONTH, work.getWorkMessage().getPublished().getDateParts().get(0).get(1) - 1);
+        //cal.set(Calendar.MONTH, work.getWorkMessage().getPublished().getDateParts().get(0).get(1) - 1); // Esquisito tem que melhorar ta gerando bug quando chega só o ano
         referencia.append(", %s %s. ".formatted(new SimpleDateFormat("MMM").format(cal.getTime()), work.getWorkMessage().getPublished().getDateParts().get(0).get(0)));
 
         referencia.append(String.format("DOI: %s. ", work.getWorkMessage().getDoi()));
@@ -68,5 +67,10 @@ public class TipoArtigoCientifico implements TipoStrategy {
 
         referencia.append("</span>");
         return referencia.toString();
+    }
+
+    @Override
+    public TipoDocumento documentoCompativel() {
+        return TipoDocumento.JOURNAL_ARTICLE;
     }
 }
