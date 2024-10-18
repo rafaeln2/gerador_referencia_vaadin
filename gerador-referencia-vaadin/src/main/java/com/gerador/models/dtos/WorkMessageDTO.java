@@ -18,10 +18,8 @@ public class WorkMessageDTO {
 	
 	@JsonProperty("DOI")
 	private String doi;
-	
+
 	private ResourceDTO resource;
-	
-	
 	
 	private String volume;
 	

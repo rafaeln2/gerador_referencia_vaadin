@@ -20,8 +20,6 @@ import static java.util.Objects.isNull;
 
 @Service
 public class ReferenciaService {
-    //https://api.crossref.org/works/10.1037/0003-066X.59.1.29/ medicine
-    //https://api.crossref.org/works/10.3233/ISU-2002-222-309
     static int codigoSucesso = 200;
     private final GeradorReferenciaResolver geradorReferencia;
     private final CrossRefClient crossRefClient;

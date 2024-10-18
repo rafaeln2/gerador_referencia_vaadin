@@ -33,5 +33,16 @@ class ApplicationTests {
             e.printStackTrace();
         }
     }
+    @Test
+    void validaApi() {
+        final var doi = "10.1590/S1519-70772014000100002";
+        try {
+            final var referencia = service.prepararReferencia(doi);
+            System.out.println(referencia.toString());
+            Assertions.assertTrue(StringUtils.isNotBlank(referencia));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
