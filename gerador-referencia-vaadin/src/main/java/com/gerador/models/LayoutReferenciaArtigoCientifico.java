@@ -19,6 +19,10 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
         StringBuilder referencia = new StringBuilder();
         referencia.append("<span>");
 
+        if(!work.getWorkMessage().getType().equalsIgnoreCase("journal-article")){
+            throw new IllegalArgumentException("Tipo inválido");
+        }
+
         //Autores
         if (work.getWorkMessage().getAuthor().size() == 1) {
             referencia.append(String.format("%s, %s.", work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(), work.getWorkMessage().getAuthor().get(0).getGiven()));
@@ -71,11 +75,11 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
                 org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MMM yyyy");
                 referencia.append(", %s ".formatted(formatter.print(date)));
             }
-        } else{
-            referencia.append(", <i>[s. d.].</i> ");
+        } else {
+            referencia.append(", [<i>s. d.</i>]");
         }
 
-        referencia.append(String.format("DOI: %s. ", work.getWorkMessage().getDoi()));
+        referencia.append(String.format(". DOI: %s. ", work.getWorkMessage().getDoi()));
 
         if (!work.getWorkMessage().getResource().getPrimary().getUrl().isEmpty()) {
             referencia.append(String.format("Disponível em: %s. ", work.getWorkMessage().getResource().getPrimary().getUrl()));
