@@ -25,7 +25,10 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
 
         //Autores
         if (work.getWorkMessage().getAuthor().size() == 1) {
-            referencia.append(String.format("%s, %s.", work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(), work.getWorkMessage().getAuthor().get(0).getGiven()));
+            referencia.append(String.format("%s, %s.", work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
+                    Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
+                            .map(s -> s.substring(0, 1))
+                            .collect(Collectors.joining())));
         } else if (work.getWorkMessage().getAuthor().size() < 3) {
             referencia.append(String.format("%s, %s.;", work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
                     Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
@@ -52,7 +55,7 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
         }
         referencia.append("<b> %s</b>".formatted(work.getWorkMessage().getContainerTitle().toString().replaceAll("[\\[\\]]", "")));
 
-        referencia.append(", [<i>s. l.</i>] "); //não tem o local de publicacao na resposta da API
+        referencia.append(", [<i>s. l.</i>]"); //não tem o local de publicacao na resposta da API
 
         //volume, edição e pagina
         if (!Strings.isEmpty(work.getWorkMessage().getVolume()))
@@ -65,15 +68,15 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
         //data por extenso da publicação. ex: abr. 2014
         if (!work.getWorkMessage().getPublished().getDateParts().isEmpty()) {
             if (work.getWorkMessage().getPublished().getDateParts().get(0).size() == 1){
-                referencia.append(", %s ".formatted(work.getWorkMessage().getPublished().getDateParts().get(0).get(0)));
+                referencia.append(", %s".formatted(work.getWorkMessage().getPublished().getDateParts().get(0).get(0)));
             } else if (work.getWorkMessage().getPublished().getDateParts().get(0).size() == 2) {
                 org.joda.time.LocalDate date = new org.joda.time.LocalDate(work.getWorkMessage().getPublished().getDateParts().get(0).get(0), work.getWorkMessage().getPublished().getDateParts().get(0).get(1), 1);
                 org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("MMM yyyy");
-                referencia.append(", %s ".formatted(formatter.print(date)));
+                referencia.append(", %s".formatted(formatter.print(date)));
             } else {
                 org.joda.time.LocalDate date = new org.joda.time.LocalDate(work.getWorkMessage().getPublished().getDateParts().get(0).get(0), work.getWorkMessage().getPublished().getDateParts().get(0).get(1), work.getWorkMessage().getPublished().getDateParts().get(0).get(2));
                 org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MMM yyyy");
-                referencia.append(", %s ".formatted(formatter.print(date)));
+                referencia.append(", %s".formatted(formatter.print(date)));
             }
         } else {
             referencia.append(", [<i>s. d.</i>]");
