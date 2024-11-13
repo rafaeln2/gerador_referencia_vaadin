@@ -24,27 +24,59 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
         }
 
         //Autores
-        if (work.getWorkMessage().getAuthor().size() == 1) {
-            referencia.append(String.format("%s, %s.", work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
-                    Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
-                            .map(s -> s.substring(0, 1))
-                            .collect(Collectors.joining())));
-        } else if (work.getWorkMessage().getAuthor().size() < 3) {
-            referencia.append(String.format("%s, %s.;", work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
-                    Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
-                            .map(s -> s.substring(0, 1))
-                            .collect(Collectors.joining())
-            ));
-            referencia.append(String.format(" %s, %s.", work.getWorkMessage().getAuthor().get(1).getFamily().toUpperCase(), Arrays.stream(work.getWorkMessage().getAuthor().get(1).getGiven().split(" "))
-                    .map(s -> s.substring(0, 1))
-                    .collect(Collectors.joining())));
-        } else { // et al
-            referencia.append(String.format("%s, %s. <i>et al.</i>",
-                    work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
-                    String.join("", Arrays.asList(Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
-                            .map(s -> s.substring(0, 1))
-                            .collect(Collectors.joining())))
-            ));
+        switch (work.getWorkMessage().getAuthor().size()) {
+            case 1:
+                referencia.append(String.format("%s, %s.",
+                        work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
+                        Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
+                                .map(s -> s.substring(0, 1))
+                                .map(s -> s + ". ")
+                                .collect(Collectors.joining())).replaceFirst(".$", ""));
+                break;
+
+            case 2:
+                referencia.append(String.format("%s, %s",
+                        work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
+                        Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
+                                .map(s -> s.substring(0, 1))
+                                .map(s -> s + ". ")
+                                .collect(Collectors.joining())).replaceFirst(".$", "").concat("; "));
+                referencia.append(String.format("%s, %s",
+                        work.getWorkMessage().getAuthor().get(1).getFamily().toUpperCase(),
+                        Arrays.stream(work.getWorkMessage().getAuthor().get(1).getGiven().split(" "))
+                                .map(s -> s.substring(0, 1))
+                                .map(s -> s + ". ")
+                                .collect(Collectors.joining())).replaceFirst(".$", ""));
+                break;
+
+            case 3:
+                referencia.append(String.format("%s, %s",
+                        work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
+                        Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
+                                .map(s -> s.substring(0, 1))
+                                .map(s -> s + ". ")
+                                .collect(Collectors.joining())).replaceFirst(".$", "").concat("; "));
+                referencia.append(String.format("%s, %s",
+                        work.getWorkMessage().getAuthor().get(1).getFamily().toUpperCase(),
+                        Arrays.stream(work.getWorkMessage().getAuthor().get(1).getGiven().split(" "))
+                                .map(s -> s.substring(0, 1))
+                                .map(s -> s + ". ")
+                                .collect(Collectors.joining())).replaceFirst(".$", "").concat("; "));
+                referencia.append(String.format("%s, %s",
+                        work.getWorkMessage().getAuthor().get(2).getFamily().toUpperCase(),
+                        Arrays.stream(work.getWorkMessage().getAuthor().get(2).getGiven().split(" "))
+                                .map(s -> s.substring(0, 1))
+                                .map(s -> s + ". ")
+                                .collect(Collectors.joining())).replaceFirst(".$", ""));
+                break;
+
+            default:
+                referencia.append(String.format("%s, %s. <i>et al.</i>",
+                        work.getWorkMessage().getAuthor().get(0).getFamily().toUpperCase(),
+                        Arrays.stream(work.getWorkMessage().getAuthor().get(0).getGiven().split(" "))
+                                .map(s -> s.substring(0, 1))
+                                .collect(Collectors.joining())));
+                break;
         }
 
         //Titulo e/ou subtitulo

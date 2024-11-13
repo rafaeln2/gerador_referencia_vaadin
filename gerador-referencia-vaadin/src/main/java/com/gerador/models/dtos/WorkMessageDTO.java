@@ -70,6 +70,7 @@ public class WorkMessageDTO {
 		this.author = author;
 	}
 
+	//titulo do journal ou periodico
 	public List<String> getContainerTitle() {
 		return containerTitle;
 	}
