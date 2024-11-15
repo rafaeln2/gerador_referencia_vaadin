@@ -1,20 +1,11 @@
 package com.gerador.services;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import com.gerador.client.CrossRefClient;
 import com.gerador.models.GeradorReferenciaResolver;
-import com.gerador.models.Referencia;
-import com.gerador.models.dtos.enums.TipoDocumento;
-import org.springframework.stereotype.Service;
-
 import com.gerador.models.dtos.WorkDTO;
 import com.gerador.models.dtos.agency.ResponseAgencyDTO;
-import com.gerador.models.dtos.type.ResponseTypeDTO;
-import com.nimbusds.jose.shaded.gson.Gson;
+import com.gerador.models.dtos.enums.TipoDocumento;
+import org.springframework.stereotype.Service;
 
 import static java.util.Objects.isNull;
 
