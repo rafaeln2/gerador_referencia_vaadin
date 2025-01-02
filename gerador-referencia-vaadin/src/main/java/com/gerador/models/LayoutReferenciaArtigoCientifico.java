@@ -3,13 +3,14 @@ package com.gerador.models;
 import com.gerador.models.dtos.WorkDTO;
 import com.gerador.models.dtos.enums.TipoDocumento;
 import org.apache.logging.log4j.util.Strings;
+import org.joda.time.*;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.joda.time.format.*;
 
 @Component
 public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrategy {
@@ -80,16 +81,19 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
         }
 
         //Titulo e/ou subtitulo
+
         if (!work.getWorkMessage().getSubtitle().isEmpty()) {
             referencia.append(String.format(" %s: %s.", work.getWorkMessage().getTitle().get(0), work.getWorkMessage().getSubtitle().get(0)));
         } else {
             referencia.append(String.format(" %s.", work.getWorkMessage().getTitle().get(0)));
         }
+
         referencia.append("<b> %s</b>".formatted(work.getWorkMessage().getContainerTitle().toString().replaceAll("[\\[\\]]", "")));
 
-        referencia.append(", [<i>s. l.</i>]"); //não tem o local de publicacao na resposta da API
+        referencia.append(", [<i>s. l.</i>]");
 
         //volume, edição e pagina
+
         if (!Strings.isEmpty(work.getWorkMessage().getVolume()))
             referencia.append(", v. %s".formatted(work.getWorkMessage().getVolume()));
         if (work.getWorkMessage().getJournalIssue() != null && !Strings.isEmpty(work.getWorkMessage().getJournalIssue().getIssue()))
@@ -98,19 +102,27 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
             referencia.append(", p. %s".formatted(work.getWorkMessage().getPage()));
 
         //data por extenso da publicação. ex: abr. 2014
+
         if (!work.getWorkMessage().getPublished().getDateParts().isEmpty()) {
             if (work.getWorkMessage().getPublished().getDateParts().get(0).size() == 1){
                 referencia.append(", %s".formatted(work.getWorkMessage().getPublished().getDateParts().get(0).get(0)));
             } else if (work.getWorkMessage().getPublished().getDateParts().get(0).size() == 2) {
-                org.joda.time.LocalDate date = new org.joda.time.LocalDate(work.getWorkMessage().getPublished().getDateParts().get(0).get(0), work.getWorkMessage().getPublished().getDateParts().get(0).get(1), 1);
-                org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("MMM yyyy");
+                LocalDate date = new LocalDate(work.getWorkMessage().getPublished().getDateParts().get(0).get(0),
+                        work.getWorkMessage().getPublished().getDateParts().get(0).get(1),
+                        1);
+                DateTimeFormatter formatter = DateTimeFormat.forPattern("MMM yyyy");
                 referencia.append(", %s".formatted(formatter.print(date)));
             } else {
-                org.joda.time.LocalDate date = new org.joda.time.LocalDate(work.getWorkMessage().getPublished().getDateParts().get(0).get(0), work.getWorkMessage().getPublished().getDateParts().get(0).get(1), work.getWorkMessage().getPublished().getDateParts().get(0).get(2));
-                org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MMM yyyy");
+                LocalDate date = new LocalDate(work.getWorkMessage().getPublished().getDateParts().get(0).get(0),
+                        work.getWorkMessage().getPublished().getDateParts().get(0).get(1),
+                        work.getWorkMessage().getPublished().getDateParts().get(0).get(2));
+                DateTimeFormatter formatter = DateTimeFormat.forPattern("dd MMM yyyy");
                 referencia.append(", %s".formatted(formatter.print(date)));
             }
-        } else {
+        }
+
+
+        else {
             referencia.append(", [<i>s. d.</i>]");
         }
 
@@ -120,8 +132,8 @@ public class LayoutReferenciaArtigoCientifico implements LayoutReferenciaStrateg
             referencia.append(String.format("Disponível em: %s. ", work.getWorkMessage().getResource().getPrimary().getUrl()));
 
             LocalDate dataAtual = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
-            referencia.append(String.format("Acesso em: %s.", dataAtual.format(formatter)));
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("d MMM yyyy");
+            referencia.append(String.format("Acesso em: %s.", formatter.print(dataAtual)));
         }
 
         referencia.append("</span>");
