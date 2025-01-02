@@ -45,7 +45,7 @@ public class ReferenciaView extends HorizontalLayout {
         btnGerarReferencia = new Button("Gerar referência");
         btnGerarReferencia.addClickListener(e -> {
         	try {
-				tfResultado.getElement().setProperty("innerHTML", service.prepararReferencia(tfDoi.getValue())); //(service.prepararReferencia(tfDoi.getValue()));
+				tfResultado.getElement().setProperty("innerHTML", service.prepararReferencia(tfDoi.getValue()));
 				tfResultado.setVisible(true);
 			} catch (Exception ex) {
                 tfDoi.setErrorMessage(ex.getMessage());

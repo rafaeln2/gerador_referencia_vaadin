@@ -32,7 +32,7 @@ public class ReferenciaService {
 
             WorkDTO work = response.getBody();
 
-            if (isNull(work) || isNull(work.getWorkMessage())) { // Tratar
+            if (isNull(work) || isNull(work.getWorkMessage())) {
                 throw new RuntimeException("Work not found");
             }
 
@@ -57,7 +57,7 @@ public class ReferenciaService {
         ResponseAgencyDTO agency = response.getBody();
 
         if (isNull(agency) || isNull(agency.getMessage())){
-            throw new RuntimeException(); // Tratar
+            throw new RuntimeException("Insira um DOI registrado pela CrossRef");
         }
 
         return agency.getMessage().getAgency().getId().equalsIgnoreCase("crossref");
